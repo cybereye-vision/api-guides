@@ -1,11 +1,16 @@
 # Optical Character Recognition (OCR)
 
-Tính năng nhận diện vùng ảnh có chứa ký tự và trích xuất nội dung. Nhận đầu vào là ảnh cần nhận diện, trả về kết quả là danh sách toạ độ vùng chứa ký tự trên ảnh và chuỗi ký tự của vùng ảnh đó.
+Tính năng nhận diện vùng ảnh có chứa ký tự và trích xuất nội dung. Nhận đầu vào là file cần nhận diện, trả về kết quả là danh sách toạ độ vùng chứa ký tự trên file và chuỗi ký tự của vùng ảnh đó.
 
 Hiện tính năng OCR hỗ trợ tốt với 2 kiểu ký tự:
 
 * Chữ in
 * Chữ viết tay (tiếng Việt).
+
+Định dạng file đầu vào:
+
+* Images (.jpg, .png, ...)
+* PDF
 
 ## Hướng dẫn
 
@@ -15,12 +20,14 @@ Client gửi yêu cầu tới **AX Cloud Vision API** qua `Async HTTP request` v
 
 ![Mo_hinh_ket_noi](./assets/ocr-fig01.png)
 
-* Client gửi request tới AX Cloud Vision API. AX trả về thông báo nhận yêu cầu thành công hoặc không thành công (trong trường hợp có lỗi nào đó xảy ra).
+* Client gửi request tới **AX Cloud Vision API**. **AX** trả về thông báo nhận yêu cầu thành công hoặc không thành công (trong trường hợp có lỗi nào đó xảy ra).
 * Client nhận kết quả nhận dạng OCR thông qua `http_callback_endpoint` ngay khi AX Cloud Vision hoàn tất quá trình xử lý.
+
+> Trường hợp gửi không thành công, client có thể dựa trên `http status code` cho AX trả về để cài đặt cơ chế retry. 
 
 ### Base64
 
-**base64-encoded**: Ảnh cần được encode theo dạng base64 trước khi gửi yêu cầu.
+**base64-encoded**: File cần được encode theo dạng base64 trước khi gửi yêu cầu.
 
 Command line
 ```cmd
@@ -63,7 +70,7 @@ var encoded = Buffer.from(imageFile).toString('base64');
 
 ### HTTP callback
 
-AX Cloud Vision sẽ chủ động trả về kết quả cho phía client ngay sau khi xử lý xong quá trình nhận dạng thông qua callback endpoint mà phía client cung cấp.
+**AX Cloud Vision** sẽ chủ động trả về kết quả cho phía client ngay sau khi xử lý xong quá trình nhận dạng thông qua *callback endpoint* mà phía client cung cấp.
 
 HTTP callback cần đảm bảo một số yêu cầu:
 
@@ -78,7 +85,10 @@ HTTP callback cần đảm bảo một số yêu cầu:
 Ví dụ:
 ```json
 {
-    "response": <data>
+    "response": {
+        "file_id": <the_identity_of_the_file>,
+        "results": <ocr_outputs>
+    }
 }
 ```
 
@@ -94,8 +104,11 @@ Mỗi request tương ứng với 1 ảnh đầu vào cần xử lý.
     - (**Required**) Content-Type: `application/json; charset=utf-8`
     - (**Required**) Authorization: Bearer `<API Key>`
 * HTTP payload:
-    - **image**: là ảnh sau khi đã encode dạng base64 ở bước trên.
+    - **file_id**: là identity của file, mỗi file có một id duy nhất để phân biệt với nhau, id này sẽ được gắn kèm kết quả trả về sau khi OCR để file client có thể ánh xạ đúng.
+    - **file_base64**: là file sau khi đã encode dạng base64 ở bước trên.
     - **type**: `TEXT` nếu là chữ in, `HANDWRI` nếu là chữ viết tay.
+
+> [**Khuyến nghị với phía client**] Có thể sử dụng mã băm (*MD5, SHA256*) của file gốc để làm id khi gửi request, vừa đảm bảo tính duy nhất, vừa có thể thực hiện checksum để kiểm tra tính toàn vẹn của file (nếu cần).
 
 #### Ví dụ
 
@@ -106,7 +119,8 @@ Chữ in
 ```json
 {
   "request": {
-      "image": "base64-encoded",
+      "file_id": <the_identity_of_the_file>,
+      "file_base64": <base64-encoded>,
       "type": "TEXT"
     }
 }
@@ -117,7 +131,8 @@ Chữ viết tay
 ```json
 {
   "requests": {
-      "image": "base64-encoded",
+      "file_id": <the_identity_of_the_file>,
+      "file_base64": <base64-encoded>,
       "type": "HANDWRI",
       "languages": ["vi"]
     }
@@ -138,6 +153,5 @@ curl -X POST \
     - `200 OK` nếu gửi yêu cầu thành công.
     - Mã lỗi khác kèm mô tả lỗi nếu gửi yêu cầu không thành công.
 
-> Trường hợp gửi không thành công, client cần tự kiểm soát cơ chế retry. 
 
 > AX Cloud Vision sẽ chỉ đối soát với những yêu cầu được gửi thành công. 

@@ -1,6 +1,6 @@
 # Cyber Eye AX Cloud Vision API
 
-**AX Cloud Vision** là phiên bản cloud của sản phẩm nhận dạng chữ viết và chữ viết tay **AX** do [Cyber Eye](https//cybereye.vn) nghiên cứu phát triển, sử dụng trong việc nhận dạng thông tin từ các hồ sơ, tài liệu dạng biểu mẫu.
+**AX Cloud Vision** là phiên bản cloud của sản phẩm nhận dạng chữ in và chữ viết tay **AX** do [Cyber Eye](https//cybereye.vn) nghiên cứu phát triển, sử dụng trong việc nhận dạng thông tin từ các hồ sơ, tài liệu dạng biểu mẫu.
 
 Tài liệu này là bản mô tả kèm hướng dẫn tích hợp và sử dụng API của **AX Cloud Vision**.
 
