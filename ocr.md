@@ -87,7 +87,7 @@ Ví dụ:
 {
     "response": {
         "file_id": <the_identity_of_the_file>,
-        "results": <ocr_outputs>
+        "result": <ocr_outputs>
     }
 }
 ```
@@ -130,7 +130,7 @@ Chữ viết tay
 
 ```json
 {
-  "requests": {
+  "request": {
       "file_id": <the_identity_of_the_file>,
       "file_base64": <base64-encoded>,
       "type": "HANDWRI",
