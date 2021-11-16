@@ -85,10 +85,8 @@ HTTP callback cần đảm bảo một số yêu cầu:
 Ví dụ:
 ```json
 {
-    "response": {
-        "file_id": <the_identity_of_the_file>,
-        "result": <ocr_outputs>
-    }
+    "fileId": <the_identity_of_the_file>,
+    <ocr_outputs>
 }
 ```
 
@@ -98,15 +96,15 @@ Ví dụ:
 
 Mỗi request tương ứng với 1 ảnh đầu vào cần xử lý.
 
-* HTTP URL: `https://cloud.ocr.vn/v1/ocr:asyncAnnotate`
+* HTTP URL: `http://cloud-dev.ocr.vn/api/ocrAsyncAnnotate`
 * HTTP method: `POST`
 * HTTP header:
-    - (**Required**) Content-Type: `application/json; charset=utf-8`
-    - (**Required**) Authorization: Bearer `<API Key>`
+    - (**Required**) Content-Type: `application/json`
+    - (**Required**) x-functions-key: `<API Key>`
 * HTTP payload:
     - **file_id**: là identity của file, mỗi file có một id duy nhất để phân biệt với nhau, id này sẽ được gắn kèm kết quả trả về sau khi OCR để file client có thể ánh xạ đúng.
     - **file_base64**: là file sau khi đã encode dạng base64 ở bước trên.
-    - **type**: `TEXT` nếu là chữ in, `HANDWRI` nếu là chữ viết tay.
+    - **type**: `TEXT` nếu là chữ in (mặc định), `HANDWRI` nếu là chữ viết tay.
 
 > [**Khuyến nghị với phía client**] Có thể sử dụng mã băm (*MD5, SHA256*) của file gốc để làm id khi gửi request, vừa đảm bảo tính duy nhất, vừa có thể thực hiện checksum để kiểm tra tính toàn vẹn của file (nếu cần).
 
@@ -118,11 +116,8 @@ Chữ in
 
 ```json
 {
-  "request": {
-      "file_id": <the_identity_of_the_file>,
-      "file_base64": <base64-encoded>,
-      "type": "TEXT"
-    }
+    "file_id": <the_identity_of_the_file>,
+    "file_base64": <base64-encoded>
 }
 ```
 
@@ -130,21 +125,19 @@ Chữ viết tay
 
 ```json
 {
-  "request": {
-      "file_id": <the_identity_of_the_file>,
-      "file_base64": <base64-encoded>,
-      "type": "HANDWRI",
-      "languages": ["vi"]
-    }
+    "file_id": <the_identity_of_the_file>,
+    "file_base64": <base64-encoded>,
+    "type": "HANDWRI",
+    "languages": ["vi"]
 }
 ```
 curl
 ```cmd
 curl -X POST \
--H "Authorization: Bearer <API Key>" \
--H "Content-Type: application/json; charset=utf-8" \
+-H "Content-Type: application/json;" \
+-H "x-function-key: <API-key>" \
 -d @request.json \
-"https://cloud.ocr.vn/v1/ocr:asyncAnnotate"
+"http://cloud-dev.ocr.vn/api/ocrAsyncAnnotate"
 ```
 
 ### Response
