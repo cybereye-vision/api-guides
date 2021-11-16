@@ -78,7 +78,7 @@ HTTP callback cần đảm bảo một số yêu cầu:
 * Protocol: `HTTP/HTTPS`
 * Method: `POST`
 * Header:
-    - (**Required**) Content-Type: `application/json; charset=utf-8`
+    - (**Required**) Content-Type: `application/json`
     - (*Optional*) Authorization: Bearer `<token>`
 * Payload: chứa kết quả nhận dạng theo cấu trúc JSON
 
