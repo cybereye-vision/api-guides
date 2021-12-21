@@ -53,7 +53,9 @@ Ví dụ:
 
 Mỗi request tương ứng với 1 ảnh đầu vào cần xử lý.
 
-* HTTP URL: `http://cloud-dev.ocr.vn/api/processTaxInvoice`
+* HTTP URL:
+    - Xử lý hoá đơn thuế: `http://cloud-dev.ocr.vn/api/processTaxInvoice`
+    - Xử lý bảo hiểm xe ô tô: `http://cloud-dev.ocr.vn/api/processAutoInsurance`
 * HTTP method: `POST`
 * HTTP header:
     - (**Required**) _Content-Type_: `application/json`
