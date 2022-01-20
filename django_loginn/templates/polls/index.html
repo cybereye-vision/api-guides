@@ -1,0 +1,20 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+    <div class="menu">
+            <h2> Đăng Nhập </h2>
+        </div>
+
+        <div class="Login">
+            <form method="post" action="login/">
+                {% csrf_token %}
+                <label for="tk">Tài Khoản</label>
+                <input type="text" placeholder="Nhap tai khoan..." id="tk" name = "username"/>
+                <label for="mk">Mật Khẩu</label>
+                <input type="pass" placeholder="Nhap mat khau..." required id="mk" name = "password">
+                <input type="submit" value="Đăng Nhập">
+            </form>
+
+
+        </div>
+{% endblock %}

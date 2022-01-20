@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+    {% if listques %}
+    <form method="get" action="Choice.html">
+        {% for i in listques %} }
+           <a href ={% url 'pchoice' i.id%}> <p> {{ i.question_text }}</p> </a>
+        {% endfor %}
+
+    {% else %}
+        <h3 style = "color: red";> Khong co du lieu cau hoi nay! </h3>
+    {% endif %}
+    </form>
+{% endblock %}

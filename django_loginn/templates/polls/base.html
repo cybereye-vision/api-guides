@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Chu</title>
+    <style>
+        .header
+        {
+            text-align: center;
+            padding: 30px;
+            background-color: slategrey;
+            color: antiquewhite;
+            border: 2px solid skyblue;
+        }
+        .menu
+        {
+            text-align:center;
+            margin-left: 200px;
+            margin-right: 200px;
+            margin-top: 20px;
+            background-color: slategrey;
+            color: antiquewhite;
+            border:2px solid skyblue;
+            border-radius: 70px;
+        }
+
+        .Login
+        {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+        <div class="header">
+            <h1>My Website</h1>
+            <h2>Cyber Labs</h2>
+            <p>Duong Van Thanh</p>
+        </div>
+
+
+        <div class="noidung">
+            {% block content %}
+            {% endblock %}
+        </div>
+</body>
+</html>
